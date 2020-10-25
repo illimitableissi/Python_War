@@ -8,8 +8,6 @@ class Card():
     """
     Card class, Suite, Rank, Value
     """
-    pass
-
     def __init__(self, suit, rank):
         self.suit = suit
         self.rank = rank
@@ -27,7 +25,6 @@ class Deck():
     """
     Deck Class
     """
-    pass
     def __init__(self):
 
         self.all_cards = []
@@ -52,7 +49,7 @@ class Player():
     """
     docstring
     """
-    pass
+
     def __init__(self, name):
         self.name = name
         self.all_cards = []
@@ -108,6 +105,34 @@ while game_on:
     #Start a New Round
     player_one_cards = []
     player_one_cards.append(player_one.remove_one())
+
     player_two_cards = []
     player_two_cards.append(player_two.remove_one())
 
+    #while at war
+    at_war = True
+    while at_war:
+        if player_one_cards[-1].value > player_two_cards[-1].value:
+            player_one.add_cards(player_one_cards)
+            player_one.add_cards(player_two_cards)
+            at_war = False
+        elif player_one_cards[-1].value < player_two_cards[-1].value:
+            player_two.add_cards(player_one_cards)
+            player_two.add_cards(player_two_cards)
+            at_war = False
+        else:
+            print("WAR!")
+            if len(player_one.all_cards) < 5:
+                print("Player one loses")
+                print("Player two wins")
+                game_on: False
+                break
+            elif len(player_two.all_cards) < 5:
+                print("Player two loses")
+                print("Player one wins")
+                game_on: False
+                break
+            else:
+                for i in range(5):
+                    player_one_cards.append(player_one.remove_one())
+                    player_two_cards.append(player_two.remove_one())
